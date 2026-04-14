@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
-public class Main {
+public class Intervalo {
     public static void main(String [] args) {
         Scanner teclado = new Scanner(System.in);
 
-        System.out.println("Digite um número: ");''
+        System.out.println("Digite um número: ");
         int numero = teclado.nextInt();
 
         System.out.println("Digite outro número maior ou menor que " + numero);
