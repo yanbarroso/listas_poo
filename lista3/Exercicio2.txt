@@ -1,0 +1,5 @@
+// A solução A é a correta, já que ela não imprime o código digitado se ele for igual à -1
+// diferente da solução B, que independente do código sempre vai imprimir o número digitado.
+
+// A correção para o código B seria justamente o código A, trocando o do... while por apenas
+// um while
