@@ -1,0 +1,29 @@
+EXERCÍCIO 2: Para que serve o modificador synchronized? Em que situações ele deve ser usado? 
+Por que não usar em todos os métodos do programa?
+
+RESPOSTA:
+
+O modificador synchronized em Java é usado para garantir que apenas uma thread execute um método (ou bloco de código) por vez, evitando condições de corrida (race conditions) e mantendo a consistência dos dados compartilhados entre threads.
+
+QUANDO USAR:
+- Quando múltiplas threads acessam e modificam variáveis compartilhadas
+- Em métodos que atualizam o estado de objetos compartilhados (por exemplo, incrementar um contador)
+- Para proteger seções críticas de código que envolvem operações não-atômicas
+- Exemplo: em uma classe que gerencia um saldo bancário, o método sacar() ou depositar() deve ser synchronized
+
+SITUAÇÕES TÍPICAS:
+1. Acesso a coleções compartilhadas
+2. Contadores ou estatísticas acessados por múltiplas threads
+3. Modificações de estado de um objeto compartilhado
+4. Operações que envolvem leitura-modificação-escrita (RMW operations)
+
+POR QUÊ NÃO USAR EM TODOS OS MÉTODOS:
+1. PERDA DE PERFORMANCE: Sincronização tem custo - apenas uma thread por vez pode executar o método. Isso reduz o paralelismo e a performance geral do programa.
+2. DESNECESSÁRIO: Se um método não compartilha dados com outras threads ou não modifica nenhum estado compartilhado, não precisa de sincronização.
+3. DEADLOCK: Usar synchronized em excesso aumenta o risco de deadlock - situação onde threads ficam aguardando umas às outras indefinidamente.
+4. SIMPLICIDADE: Código com muita sincronização fica mais complexo e difícil de manter.
+5. MÉTODOS SEGUROS: Leitura de variáveis imutáveis ou métodos que apenas calculam sem modificar estado não precisam de sincronização.
+
+EXEMPLO:
+- Um método que apenas retorna um valor (getter simples) não precisa ser synchronized
+- Um método que incrementa um contador compartilhado DEVE ser synchronized

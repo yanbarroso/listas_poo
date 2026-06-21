@@ -1,0 +1,67 @@
+EXERCÍCIO 3: Qual a diferença entre o método sleep() e o método join() da classe Thread?
+
+RESPOSTA:
+
+Ambos os métodos causam que uma thread aguarde, mas com propósitos e mecanismos diferentes:
+
+MÉTODO SLEEP():
+- Faz a thread atual dormir/pausar por um tempo especificado (em milissegundos)
+- A thread entra em estado WAITING e libera o processador
+- Após o tempo decorrer, a thread volta ao estado RUNNABLE e pode ser executada novamente
+- É um método ESTÁTICO - pode ser chamado como Thread.sleep(1000)
+- Não se preocupa com outras threads - apenas faz a thread atual esperar por tempo fixo
+- Não participa do ciclo de vida de outras threads
+- Sintaxe: Thread.sleep(milisegundos);
+
+EXEMPLO:
+  Thread.sleep(2000); // Aguarda 2 segundos
+
+MÉTODO JOIN():
+- Faz a thread atual aguardar até que OUTRA thread termine sua execução
+- A thread atual fica bloqueada até o término da thread alvo
+- O tempo de espera é INDETERMINADO - depende de quanto tempo a outra thread leva para terminar
+- É um método de INSTÂNCIA - chamado no objeto de uma thread específica
+- Sincroniza o fluxo de execução entre threads
+- Permite que uma thread aguarde o término de outra antes de continuar
+
+EXEMPLO:
+  Thread t = new Thread(...);
+  t.start();
+  t.join(); // Aguarda t terminar antes de continuar
+
+RESUMO COMPARATIVO:
+
+╔════════════╦═══════════════════════════════╦═════════════════════════════════╗
+║  Aspecto   ║      sleep()                  ║          join()                 ║
+╠════════════╬═══════════════════════════════╬═════════════════════════════════╣
+║ Tipo       ║ Estático (Thread.sleep)       ║ Instância (thread.join)         ║
+║ Propósito  ║ Pausa por tempo fixo           ║ Aguarda fim de outra thread    ║
+║ Duração    ║ Determinada (tempo fixo)      ║ Indeterminada                  ║
+║ Afeta      ║ A thread que o chama          ║ A thread que o chama           ║
+║ Espera por ║ Tempo decorrido               ║ Conclusão de outra thread      ║
+║ Uso        ║ Delays, simulações, esperas   ║ Sincronização entre threads    ║
+╚════════════╩═══════════════════════════════╩═════════════════════════════════╝
+
+CASO DE USO:
+
+1. sleep() - Quando você quer que sua thread espere um tempo específico:
+   public void executar() {
+       System.out.println("Começando...");
+       try {
+           Thread.sleep(3000); // Espera 3 segundos
+       } catch (InterruptedException e) { }
+       System.out.println("Continuando após 3 segundos");
+   }
+
+2. join() - Quando você quer esperar que uma thread termine antes de continuar:
+   public static void main(String[] args) {
+       Thread t1 = new MinhaThread("Thread 1");
+       Thread t2 = new MinhaThread("Thread 2");
+       t1.start();
+       t2.start();
+       try {
+           t1.join(); // Aguarda t1 terminar
+           t2.join(); // Aguarda t2 terminar
+       } catch (InterruptedException e) { }
+       System.out.println("Todas as threads terminaram");
+   }
